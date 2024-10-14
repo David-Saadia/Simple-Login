@@ -60,14 +60,12 @@ class Window(ctk.CTk):
 
     def _buildLogin(self):        
         
-
         self.clear()
 
         fields = [
             ("user", "Enter Username"),
             ("password","Enter Password")
         ]
-
 
         self.registerBtn = ctk.CTkButton(self, 
                                         text="Create Account", 
@@ -77,6 +75,7 @@ class Window(ctk.CTk):
                                         text_color=("gray10", "#DCE4EE"),
                                         hover=False,
                                         command= lambda: self.buildWindow("Register"))
+        
         self.forgotBtn = ctk.CTkButton(self,
                                         text="Forgot password?", 
                                         font=("Arial", 16), 
@@ -85,11 +84,7 @@ class Window(ctk.CTk):
                                         text_color=("gray10", "#DCE4EE"),
                                         hover=False,
                                         command= lambda: print("User forgot account!"))
-
-        self.registerBtn.pack(side="left", padx=0)
-        self.forgotBtn.pack(side="right", padx=0)
-
-
+        
         self.submitBtn = ctk.CTkButton(self,
                                         text="Login", 
                                         font=("Arial", 16), 
@@ -101,86 +96,8 @@ class Window(ctk.CTk):
                                         command= lambda: print("Logging in user..."),
                                         hover_color=(LIGHT_BORDER,DARK_BORDER))
         
-        self.submitBtn.pack(side="right", padx=10)
-
         layoutManager = LayoutManager("layout1", self)
         layoutManager.layout1("Login", fields, (self.registerBtn, self.forgotBtn), self.submitBtn)
-
-        # self.clear()
-
-        # #Configure window layout
-        # self.columnconfigure((0,2), weight = 1, uniform="a")
-        # self.columnconfigure(1, weight = 5, uniform="a")
-        # self.rowconfigure((0,1), weight = 2, uniform = "a")
-        # self.rowconfigure((2,3), weight = 1, uniform="a")
-
-        
-        # #Title
-        # ctk.CTkLabel(self, text="Login", font=("Arial", 62, "bold"),justify="center").grid(row=0, column=1, sticky="nesw", padx=10, pady=10) #font= will later be grabbed from config file.
-
-        
-        # #Theme Change
-        # self.themeChangeImg = ctk.CTkImage(light_image= Image.open("./assets/themeLight.png"),dark_image= Image.open("./assets/themeDark.png")) #This picture has been designed using resources from Flaticon.com
-        # self.themeChangeBtn = ctk.CTkButton(self, 
-        #                                     text="", 
-        #                                     font=("Arial", 12), 
-        #                                     command=self.switchTheme, 
-        #                                     image= self.themeChangeImg, 
-        #                                     border_width=0,
-        #                                     width=16, 
-        #                                     fg_color=(LIGHT_BORDER,DARK_BORDER), 
-        #                                     hover=False)
-        # self.themeChangeBtn.grid(row=0, column=2, sticky="n", padx=10, pady=10) 
-
-        # #Containers
-        # fieldsContainer = ctk.CTkFrame(self, fg_color="transparent")
-        # registerForgotContainer = ctk.CTkFrame(self, fg_color="transparent")
-        # submitContainer = ctk.CTkFrame(self, fg_color="transparent")
-
-        # #Fields
-        # self.userField = Field(fieldsContainer, type="user", prompt="Enter Username")
-        # self.passwordField = Field(fieldsContainer, type="password", prompt="Enter Password")
-
-        # fieldsContainer.grid(row=1, column=1, sticky="nesw", padx=10, pady=10)
-
-        # #Register/Forgot
-        # self.registerBtn = ctk.CTkButton(registerForgotContainer, 
-        #                                 text="Create Account", 
-        #                                 font=("Arial", 16), 
-        #                                 fg_color="transparent",
-        #                                 border_width=0, 
-        #                                 text_color=("gray10", "#DCE4EE"),
-        #                                 hover=False,
-        #                                 command= lambda: self.buildWindow("Register"))
-        # self.forgotBtn = ctk.CTkButton(registerForgotContainer,
-        #                                 text="Forgot password?", 
-        #                                 font=("Arial", 16), 
-        #                                 fg_color="transparent", 
-        #                                 border_width=0, 
-        #                                 text_color=("gray10", "#DCE4EE"),
-        #                                 hover=False,
-        #                                 command= lambda: print("User forgot account!"))
-        
-        # self.registerBtn.pack(side="left", padx=0)
-        # self.forgotBtn.pack(side="right", padx=0)
-
-        # registerForgotContainer.grid(row=2, column=1, sticky="nesw", padx=10, pady=10)
-
-        # #Submit
-        # self.submitBtn = ctk.CTkButton(submitContainer,
-        #                                 text="Login", 
-        #                                 font=("Arial", 16), 
-        #                                 fg_color="transparent", 
-        #                                 border_width=3, 
-        #                                 border_color=(LIGHT_BORDER,DARK_BORDER),
-        #                                 corner_radius=5,
-        #                                 text_color=("gray10", "#DCE4EE"),
-        #                                 command= lambda: print("Logging in user..."),
-        #                                 hover_color=(LIGHT_BORDER,DARK_BORDER))
-        # self.submitBtn.pack(side="right", padx=10)
-
-        # submitContainer.grid(row=3, column=1, sticky="nesw", padx=10, pady=10)
-
 
     def _buildRegister(self):
         
@@ -208,65 +125,7 @@ class Window(ctk.CTk):
         
         self.layoutManager = LayoutManager("layout1", self)
         self.layoutManager.layout1("Register", fields, (businessLabel,self.businessCheckbox), self.submitBtn)
-        
-        # #configure window layout
-        # self.columnconfigure((0,2), weight = 1, uniform="a")
-        # self.columnconfigure(1, weight=5, uniform="a")
-        # self.rowconfigure((0,1), weight = 3, uniform = "a")
-        # self.rowconfigure((3,4), weight= 1, uniform="a")
-
-        # #Title
-        # ctk.CTkLabel(self, text="Register", font=("Arial", 62, "bold"), justify="center").grid(row=0, column=1, sticky="nesw", padx=10, pady=10)
-
-        # #Theme Change
-        # self.themeChangeImg = ctk.CTkImage(light_image= Image.open("./assets/themeLight.png"),dark_image= Image.open("./assets/themeDark.png")) #This picture has been designed using resources from Flaticon.com
-        # self.themeChangeBtn = ctk.CTkButton(self, 
-        #                                     text="", 
-        #                                     font=("Arial", 12), 
-        #                                     command=self.switchTheme, 
-        #                                     image= self.themeChangeImg, 
-        #                                     border_width=0,
-        #                                     width=16, 
-        #                                     fg_color=(LIGHT_BORDER,DARK_BORDER), 
-        #                                     hover=False)
-        # self.themeChangeBtn.grid(row=0, column=2, sticky="n", padx=10, pady=10) 
-    
-        # #Containers
-        # fieldsContainer = ctk.CTkFrame(self, fg_color="transparent")
-        # businessContainer = ctk.CTkFrame(self, fg_color="transparent")
-        # submitContainer = ctk.CTkFrame(self, fg_color="transparent")
-
-        # #Fields
-
-        # self.userField = Field(fieldsContainer, type="user", prompt="Enter Username")
-        # self.emailField = Field(fieldsContainer, type="email", prompt="Enter Email")
-        # self.passwordField = Field(fieldsContainer, type="password", prompt="Enter Password")
-        # self.confirmPasswordField = Field(fieldsContainer, type="password", prompt="Confirm Password")
-
-        # fieldsContainer.grid(row=1, column=1, sticky="nesw", padx=10, pady=10)
-
-        # #Business
-        # businessContainer.grid_columnconfigure((0,1), weight=1)
-        # ctk.CTkLabel(businessContainer, text="Here for business?", font=("Arial", 16)).grid(column=0, row=0, sticky="nsw")
-        # self.businessCheckbox = ctk.CTkCheckBox(businessContainer,text= "", command=lambda: print("Is business?"), border_width=1, width=24) #width = 24 actual checkbox size.
-        # self.businessCheckbox.grid(column= 1, row=0, sticky="nes")
-        # businessContainer.grid(row=2, column=1, sticky="nesw", padx=10, pady=10)
-
-        # #Submit
-        # self.submitBtn = ctk.CTkButton(submitContainer, 
-        #                                 text="Submit", 
-        #                                 font=("Arial", 16), 
-        #                                 fg_color="transparent", 
-        #                                 border_width=3,
-        #                                 border_color=(LIGHT_BORDER,DARK_BORDER), 
-        #                                 corner_radius=5,
-        #                                 text_color=("gray10", "#DCE4EE"),
-        #                                 command= lambda: self.buildWindow("Verify"),
-        #                                 hover_color=(LIGHT_BORDER,DARK_BORDER))
-        # self.submitBtn.pack(side="right", padx=0)
-
-        # submitContainer.grid(row=4, column=1, sticky="nesw", padx=10, pady=10)
-
+         
     def _buildVerify(self):
         
         self.clear()
