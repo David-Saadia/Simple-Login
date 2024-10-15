@@ -129,52 +129,11 @@ class Window(ctk.CTk):
     def _buildVerify(self):
         
         self.clear()
-        
-        #configure window layout
-        self.columnconfigure((0,2), weight = 1, uniform="a")
-        self.columnconfigure(1, weight=5, uniform="a")
-        self.rowconfigure((0,1,2), weight = 2, uniform = "a")
-        self.rowconfigure(3, weight= 1, uniform="a")
 
-
-
-
-        #Title
-        ctk.CTkLabel(self, text="Verify Your Account", font=("Arial", 62, "bold"), justify="center").grid(row=0, column=1, sticky="nesw", padx=10, pady=10)
-
-        #Theme Change
-        self.themeChangeImg = ctk.CTkImage(light_image= Image.open("./assets/themeLight.png"),dark_image= Image.open("./assets/themeDark.png")) #This picture has been designed using resources from Flaticon.com
-        self.themeChangeBtn = ctk.CTkButton(self, 
-                                            text="", 
-                                            font=("Arial", 12), 
-                                            command=self.switchTheme, 
-                                            image= self.themeChangeImg, 
-                                            border_width=0,
-                                            width=16, 
-                                            fg_color=(LIGHT_BORDER,DARK_BORDER), 
-                                            hover=False)
-        self.themeChangeBtn.grid(row=0, column=2, sticky="n", padx=10, pady=10) 
-
-        #Containers
-        self.explanationTextContainer = ctk.CTkFrame(self, fg_color="transparent")
-        fieldsContainer = ctk.CTkFrame(self, fg_color="transparent")
-        submitContainer = ctk.CTkFrame(self, fg_color="transparent")
-        
-        #Explanation
         explanationText = "We sent a verification code to your email, please insert the code to verify your account"
+        explanationLabel = ctk.CTkLabel(self, text=explanationText, font=("Arial", 32 ), justify="center", wraplength=32*20)# wraplength = fontsize*20
 
-        ctk.CTkLabel(self.explanationTextContainer, text=explanationText, font=("Arial", 32 ), justify="center", wraplength=32*20).pack(padx= 10) # wraplength = fontsize*20
-        self.explanationTextContainer.grid(row=1, column=1, sticky="new", padx=10, pady=10)
-
-
-        #Authenitication Field
-        self.authField = Field(fieldsContainer, type="auth", prompt="Enter Code")
-        self.authField.input.bind("<KeyRelease>", self.authField.handleCodeInput)
-        fieldsContainer.grid(row=2, column=1, sticky="nesw", padx=10, pady=10)
-
-
-        #Submit
-        self.submitBtn = ctk.CTkButton(submitContainer, 
+        self.submitBtn = ctk.CTkButton(self, 
                                         text="Submit", 
                                         font=("Arial", 16), 
                                         fg_color="transparent", 
@@ -182,36 +141,116 @@ class Window(ctk.CTk):
                                         border_color=(LIGHT_BORDER,DARK_BORDER),
                                         corner_radius=5,
                                         text_color=("gray10", "#DCE4EE"),
-                                        command= lambda: self.badCode.pack(side="left", padx=0),
                                         hover_color=(LIGHT_BORDER,DARK_BORDER)
                                         )
-        self.submitBtn.pack(side="right", padx=0)
-        self.badCode = ctk.CTkFrame(submitContainer, fg_color="transparent")
+        
+        self.badCode = ctk.CTkFrame(self, fg_color="transparent")
         ctk.CTkLabel(self.badCode, text="Wrong code!", font=("Arial", 16), text_color="red").pack(side="left", padx=0)
         ctk.CTkButton(self.badCode, text="send another", font=("Arial", 16), text_color="red", fg_color="transparent", hover=False, height=16, width=40 ,anchor = "center", command= lambda: print("Send another code")).pack(side="left", padx=0, pady=0)
+   
+        
+        self.layoutManager = LayoutManager("layout2", self)
+        self.layoutManager.layout2("Verify Your Account", [explanationLabel], [("auth", "Enter Code")], self.submitBtn, self.badCode)
+        self.fields["auth"].input.bind("<KeyRelease>", self.fields["auth"].handleCodeInput)
+
+        # #configure window layout
+        # self.columnconfigure((0,2), weight = 1, uniform="a")
+        # self.columnconfigure(1, weight=5, uniform="a")
+        # self.rowconfigure((0,1,2), weight = 2, uniform = "a")
+        # self.rowconfigure(3, weight= 1, uniform="a")
+
+
+
+
+        # #Title
+        # ctk.CTkLabel(self, text="Verify Your Account", font=("Arial", 62, "bold"), justify="center").grid(row=0, column=1, sticky="nesw", padx=10, pady=10)
+
+        # #Theme Change
+        # self.themeChangeImg = ctk.CTkImage(light_image= Image.open("./assets/themeLight.png"),dark_image= Image.open("./assets/themeDark.png")) #This picture has been designed using resources from Flaticon.com
+        # self.themeChangeBtn = ctk.CTkButton(self, 
+        #                                     text="", 
+        #                                     font=("Arial", 12), 
+        #                                     command=self.switchTheme, 
+        #                                     image= self.themeChangeImg, 
+        #                                     border_width=0,
+        #                                     width=16, 
+        #                                     fg_color=(LIGHT_BORDER,DARK_BORDER), 
+        #                                     hover=False)
+        # self.themeChangeBtn.grid(row=0, column=2, sticky="n", padx=10, pady=10) 
+
+        # #Containers
+        # self.explanationTextContainer = ctk.CTkFrame(self, fg_color="transparent")
+        # fieldsContainer = ctk.CTkFrame(self, fg_color="transparent")
+        # submitContainer = ctk.CTkFrame(self, fg_color="transparent")
+        
+        # #Explanation
+        # explanationText = "We sent a verification code to your email, please insert the code to verify your account"
+
+        # ctk.CTkLabel(self.explanationTextContainer, text=explanationText, font=("Arial", 32 ), justify="center", wraplength=32*20).pack(padx= 10) # wraplength = fontsize*20
+        # self.explanationTextContainer.grid(row=1, column=1, sticky="new", padx=10, pady=10)
+
+
+        # #Authenitication Field
+        # self.authField = Field(fieldsContainer, type="auth", prompt="Enter Code")
+        # self.authField.input.bind("<KeyRelease>", self.authField.handleCodeInput)
+        # fieldsContainer.grid(row=2, column=1, sticky="nesw", padx=10, pady=10)
+
+
+        # #Submit
+        # self.submitBtn = ctk.CTkButton(submitContainer, 
+        #                                 text="Submit", 
+        #                                 font=("Arial", 16), 
+        #                                 fg_color="transparent", 
+        #                                 border_width=3, 
+        #                                 border_color=(LIGHT_BORDER,DARK_BORDER),
+        #                                 corner_radius=5,
+        #                                 text_color=("gray10", "#DCE4EE"),
+        #                                 command= lambda: self.badCode.pack(side="left", padx=0),
+        #                                 hover_color=(LIGHT_BORDER,DARK_BORDER)
+        #                                 )
+        # self.submitBtn.pack(side="right", padx=0)
+        # self.badCode = ctk.CTkFrame(submitContainer, fg_color="transparent")
+        # ctk.CTkLabel(self.badCode, text="Wrong code!", font=("Arial", 16), text_color="red").pack(side="left", padx=0)
+        # ctk.CTkButton(self.badCode, text="send another", font=("Arial", 16), text_color="red", fg_color="transparent", hover=False, height=16, width=40 ,anchor = "center", command= lambda: print("Send another code")).pack(side="left", padx=0, pady=0)
         
 
-        submitContainer.grid(row=3, column=1, sticky="nesw", padx=10, pady=10)
+        # submitContainer.grid(row=3, column=1, sticky="nesw", padx=10, pady=10)
 
     def on_resize(self, _):
        
         if self._type.lower() == "verify":
-            explanationContext = self.explanationTextContainer.winfo_children()[0]
-            wp = explanationContext.cget("wraplength")
-            if self.winfo_width() < (wp * 1.5):
-                explanationContext.configure(wraplength= wp - 10)
-            elif self.winfo_width() > (wp * 1.5):
-                explanationContext.configure(wraplength= wp + 10)	
+            if self.showcaseContainer.winfo_children():
+                explanationContext = self.showcaseContainer.winfo_children()[0]
+                wp = explanationContext.cget("wraplength")
+                if self.winfo_width() < (wp * 1.5):
+                    explanationContext.configure(wraplength= wp - 10)
+                elif self.winfo_width() > (wp * 1.5):
+                    explanationContext.configure(wraplength= wp + 10)	
 
     def switchTheme(self: ctk.CTk):
         current_mode = self._get_appearance_mode()
         new_mode = "dark" if current_mode == "light" else "light"
         ctk.set_appearance_mode(new_mode)
     
-    def switchParent(self, widget: ctk.CTkBaseClass, frame: ctk.CTkFrame, pack_options: dict = None):
+    def switchParent(self, widget: ctk.CTkBaseClass, frame: ctk.CTkFrame, pack_options: dict = None, display: bool=True) -> None:
+        """
+        Switches the parent of a widget and packs the widget into a frame.
+
+        Args:
+            Param widget: The widget to switch the parent of
+            Param frame: The frame to pack the widget into
+            Param pack_options: The options to pass to the pack method
+            Param display: Whether to display the widget or not after changing parents
+
+        Returns:
+            None
+        """
+        
         widget.pack_forget()
         widget.pack(in_=frame, **pack_options)
         print (widget.pack_info())
+        if not display:
+            widget.pack_forget()
         widget.lift()
 
     def clear(self):
@@ -319,7 +358,7 @@ class LayoutManager():
         self.window = window
 
         
-    def layout1(self , title:str, fields:list[tuple[str,str]], checkSection:tuple[ctk.CTkBaseClass,ctk.CTkBaseClass], submitBtm:ctk.CTkButton):
+    def layout1(self , title:str, fields:list[tuple[str,str]], checkSection:tuple[ctk.CTkBaseClass,ctk.CTkBaseClass], submitBtn:ctk.CTkButton) -> None:
         
         
         #Configure window layout
@@ -363,7 +402,7 @@ class LayoutManager():
           
 
         #Submit
-        self.window.switchParent(submitBtm, submitContainer, {"side":"right", "padx":10})
+        self.window.switchParent(submitBtn, submitContainer, {"side":"right", "padx":10})
         
       
         #Packing 
@@ -373,6 +412,65 @@ class LayoutManager():
         fieldsContainer.grid(row=1, column=1, sticky="nesw", padx=10, pady=10)
         checkSectionContainer.grid(row=2, column=1, sticky="nesw", padx=10, pady=10)
         submitContainer.grid(row=3, column=1, sticky="nesw", padx=10, pady=10)
+
+
+    def layout2(self, title:str, showcaseSection:list[ctk.CTkBaseClass], fields:list[tuple[str,str]], submitBtn:ctk.CTkButton, badSubmit:ctk.CTkFrame = None) -> None:
+        
+        #Configure window layout
+        self.window.columnconfigure((0,2), weight = 1, uniform="a")
+        self.window.columnconfigure(1, weight=5, uniform="a")
+        self.window.rowconfigure((0,1,2), weight = 2, uniform = "a")
+        self.window.rowconfigure(3, weight= 1, uniform="a")
+
+
+        #Title
+        labelTitle = ctk.CTkLabel(self.window, text=title, font=("Arial", 62, "bold"),justify="center") #font= will later be grabbed from config file.
+
+        #Theme Change
+        self.window.themeChangeImg = ctk.CTkImage(light_image= Image.open("./assets/themeLight.png"),dark_image= Image.open("./assets/themeDark.png")) #This picture has been designed using resources from Flaticon.com
+        self.window.themeChangeBtn = ctk.CTkButton(self.window, 
+                                            text="", 
+                                            font=("Arial", 12), 
+                                            command= self.window.switchTheme, 
+                                            image= self.window.themeChangeImg, 
+                                            border_width=0,
+                                            width=16, 
+                                            fg_color=(LIGHT_BORDER,DARK_BORDER), 
+                                            hover=False)
+        
+        #Containers
+        self.window.showcaseContainer = ctk.CTkFrame(self.window, fg_color="transparent")
+        fieldsContainer = ctk.CTkFrame(self.window, fg_color="transparent")
+        submitContainer = ctk.CTkFrame(self.window, fg_color="transparent")
+
+
+        #Showcase Section
+
+        for item in showcaseSection:
+            self.window.switchParent(item, self.window.showcaseContainer, {"padx":10})
+
+        #Fields
+        self.window.fields = {}
+        for fieldType, fieldPrompt in fields:
+            self.window.fields[fieldType] = Field(fieldsContainer, type=fieldType, prompt=fieldPrompt)
+        
+
+        #Submit
+        self.window.switchParent(submitBtn, submitContainer, {"side":"right", "padx":0})
+        submitBtn.configure(command= lambda: self.window.badCode.pack(in_= submitContainer,side="left", padx=0))
+        if badSubmit is not None:
+            self.window.switchParent(badSubmit, submitContainer, {"side":"left", "padx":0}, display=False)
+        
+
+        #Packing
+        self.window.themeChangeBtn.grid(row=0, column=2, sticky="n", padx=10, pady=10)
+
+        labelTitle.grid(row=0, column=1, sticky="nesw", padx=10, pady=10)
+        self.window.showcaseContainer.grid(row=1, column=1, sticky="nesw", padx=10, pady=10)
+        fieldsContainer.grid(row=2, column=1, sticky="nesw", padx=10, pady=10)
+        submitContainer.grid(row=3, column=1, sticky="nesw", padx=10, pady=10)
+
+
 
 def main():
     window = Window(winDim = (1100,600), winTitle= "Login", center= True)
