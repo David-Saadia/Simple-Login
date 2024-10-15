@@ -58,7 +58,7 @@ class Window(ctk.CTk):
             case _:
                 print("Invalid window type")
 
-    def _buildLogin(self):        
+    def _buildLogin(self) -> None:        
         
         self.clear()
 
@@ -99,7 +99,7 @@ class Window(ctk.CTk):
         layoutManager = LayoutManager("layout1", self)
         layoutManager.layout1("Login", fields, (self.registerBtn, self.forgotBtn), self.submitBtn)
 
-    def _buildRegister(self):
+    def _buildRegister(self) -> None:
         
         self.clear()
 
@@ -126,7 +126,7 @@ class Window(ctk.CTk):
         self.layoutManager = LayoutManager("layout1", self)
         self.layoutManager.layout1("Register", fields, (businessLabel,self.businessCheckbox), self.submitBtn)
          
-    def _buildVerify(self):
+    def _buildVerify(self)-> None:
         
         self.clear()
 
@@ -154,7 +154,7 @@ class Window(ctk.CTk):
         self.fields["auth"].input.bind("<KeyRelease>", self.fields["auth"].handleCodeInput)
 
 
-    def on_resize(self, _):
+    def on_resize(self, _) -> None:
        
         if self._type.lower() == "verify":
             if self.showcaseContainer.winfo_children():
@@ -165,7 +165,7 @@ class Window(ctk.CTk):
                 elif self.winfo_width() > (wp * 1.5):
                     explanationContext.configure(wraplength= wp + 10)	
 
-    def switchTheme(self: ctk.CTk):
+    def switchTheme(self: ctk.CTk) -> None:
         current_mode = self._get_appearance_mode()
         new_mode = "dark" if current_mode == "light" else "light"
         ctk.set_appearance_mode(new_mode)
@@ -191,7 +191,7 @@ class Window(ctk.CTk):
             widget.pack_forget()
         widget.lift()
 
-    def clear(self):
+    def clear(self) -> None:
         for widget in self.winfo_children():
             widget.destroy()
 
