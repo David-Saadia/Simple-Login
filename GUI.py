@@ -2,6 +2,9 @@
 import customtkinter as ctk
 #from tkinter import ttk
 from PIL import Image, ImageTk
+import multiprocessing as mp
+import time
+
 
 LIGHT_BORDER = "#cce6ff"
 DARK_BORDER = "#343638"
@@ -30,7 +33,7 @@ class Window(ctk.CTk):
         taskbarOffset = TASKBAROFFSET # This will later be grabbed from config file.
         offsetString = f"+{int(screenWidth/2 - winDim[0]/2)}+{int(screenHeight/2 - winDim[1]/2 - taskbarOffset)}" if center else ""
         
-        print(f"Screen dimensions: {screenWidth}x{screenHeight}")
+        #DEBUG: print(f"Screen dimensions: {screenWidth}x{screenHeight}")
         self.windowLimits = winDimLim if winDimLim else WINDOW_MAX_SIZE # This will later be grabbed from config file.
         
 
@@ -186,7 +189,7 @@ class Window(ctk.CTk):
         
         widget.pack_forget()
         widget.pack(in_=frame, **pack_options)
-        print (widget.pack_info())
+        #DEBUG: print (widget.pack_info())
         if not display:
             widget.pack_forget()
         widget.lift()
@@ -415,5 +418,46 @@ def main():
     window.buildWindow("Login")
     window.mainloop()
 
+
+def start(parentConnectionAPI):
+    print("GUI started")
+    # Setting up another process to run the window
+    windowProcess = mp.Process(target=main)
+    windowProcess.start()
+
+    # Idle mode - listening for requests
+    while True:
+        try:
+            if parentConnectionAPI.poll():
+                request  = parentConnectionAPI.recv()
+                if isinstance(request, dict):
+                    match request.get("func"):
+                        case "testImport":
+                            res = testImport(*request["args"])
+                            parentConnectionAPI.send(res)
+                        case _:
+                            print("Unknown request")
+                else:
+                    print(request)
+       
+        except BrokenPipeError as e:
+            print(e)
+            return
+
+
+        time.sleep(5)
+
+
+
+def testImport(val: int) -> str:
+    if isinstance(val,int):
+        return "The test was successful " + str(val)
+    else:
+        raise ValueError("Value must be an int")
+
 if __name__ == "__main__":
-    main()
+    print("Hello world")
+    print(__name__)
+
+else:
+    print("GUI Imported and loaded")
